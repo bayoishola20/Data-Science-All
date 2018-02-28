@@ -13,3 +13,5 @@ Tips, Tricks and Thoughts
 [bayoishola20](https://github.com/bayoishola20/)
 
 Inspired by several online resources and personal encounters. :smiles:
+
+&rightarrow; https://www.statmethods.net/input/datatypes.html
