@@ -12,6 +12,31 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages("openxlsx") [# The above does have memory issues even for a file of few MBs. Use this instead]
 
+## Topics of Interest
+
+* matplotlib
+* D3.js
+* Spatial Analysis (leaflet, GDAL, OGR)
+* Inferential statistics & Probability distributions
+* Parameter estimation
+* Hypothesis testing
+* Statistical significance
+* Correlation and regression
+* A/B Testings
+* Maximum likelihood
+* Generalized linear model
+
+- Machine Learning
+* Scikit-learn
+* Supervised and unsupervised learning
+* Naive Bayes
+* SVM
+* Decision trees
+* Regression
+* clustering
+* Dimensionality reduction
+* Validation & evaluation of ML methods
+
 [bayoishola20](https://github.com/bayoishola20/)
 
 Inspired by several online resources and personal encounters. :smiles:
