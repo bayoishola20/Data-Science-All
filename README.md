@@ -12,6 +12,8 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages("openxlsx") [# The above does have memory issues even for a file of few MBs. Use this instead]
 
+&rightarrow; install.packages('RColorBrewer') [For viz color]
+
 ## Topics of Interest
 
 * matplotlib
