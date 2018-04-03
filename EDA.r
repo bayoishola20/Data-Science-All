@@ -4,8 +4,8 @@ library(ggplot2)
 # install RColorBrewer
 library(RColorBrewer)
 
-# load economics data
-data(diamonds)
+# load midwest data
+data("midwest")
 
-# Scatter plot of population versus unemploy
-ggplot(data = diamonds, x = carat, y = price, color = cut) + scale_color_brewer(palette = 'Accent')
+# Scatter plot of total population versus known poverty population
+ggplot(midwest, aes(x = poptotal, y = poppovertyknown, color = state)) + geom_point() + scale_color_brewer(palette = 'Accent')
