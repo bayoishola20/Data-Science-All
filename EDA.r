@@ -41,3 +41,4 @@ reddit$age.range <- ordered(reddit$age.range, levels = c("Under 18", "18-24", "3
 qplot(data = reddit, x = age.range)
 
 read.delim('pseudo_facebook.tsv')
+list.files()
