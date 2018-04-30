@@ -42,3 +42,5 @@ qplot(data = reddit, x = age.range)
 
 read.delim('pseudo_facebook.tsv')
 list.files()
+pf <- read.csv('pseudo_facebook.tsv', sep = "\t")
+names(pf)
