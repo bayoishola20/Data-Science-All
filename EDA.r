@@ -47,3 +47,11 @@ pf <- read.csv('pseudo_facebook.tsv', sep = "\t") # tsv - tab seperated values f
 pf <- read.delim('pseudo_facebook.tsv') # read.delim() function defaults to the tab character as the separator between values and the period as the decimal character.
 
 names(pf)
+qplot(x = dob_day, data = pf)
+
+install.packages('ggthemes', dependencies = TRUE)
+library(ggthemes)
+
+ggplot(aes(x = dob_day), data = pf) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = 1:31)

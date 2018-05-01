@@ -14,6 +14,8 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages('RColorBrewer') [For viz color]
 
+&rightarrow; install.packages('ggthemes', dependencies = TRUE)
+
 ## Topics of Interest
 
 * matplotlib
