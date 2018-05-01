@@ -42,5 +42,8 @@ qplot(data = reddit, x = age.range)
 
 read.delim('pseudo_facebook.tsv')
 list.files()
-pf <- read.csv('pseudo_facebook.tsv', sep = "\t")
+pf <- read.csv('pseudo_facebook.tsv', sep = "\t") # tsv - tab seperated values file
+
+pf <- read.delim('pseudo_facebook.tsv') # read.delim() function defaults to the tab character as the separator between values and the period as the decimal character.
+
 names(pf)
