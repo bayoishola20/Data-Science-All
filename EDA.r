@@ -80,9 +80,20 @@ ggplot(aes(x = tenure), data = pf) +
 ggplot(aes(x = tenure/365), data = pf) +
   geom_histogram(binwidth = .25, color = 'white', fill = 'lightblue')
 
+summary(pf$age)
 
 ggplot(aes(x = age), data = pf) +
-  geom_histogram(binwidth = 1, fill = '#7760AB') +
+  geom_histogram(binwidth = 1, color = 'white', fill = '#7760AB') +
   scale_x_continuous(breaks = seq(0, 113, 5)) +
   xlab('Facebook users age') +
   ylab('Number of users in sample')
+
+install.packages('gridExtra')
+
+summary(pf$friend_count)
+summary(log10(pf$friend_count + 1))
+summary(sqrt(pf$friend_count))
+
+library(gridExtra)
+
+save.image("/var/www/example.com/public_html/Data-Science-All/workspace.RData")

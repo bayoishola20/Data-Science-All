@@ -14,7 +14,9 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages('RColorBrewer') [For viz color]
 
-&rightarrow; install.packages('ggthemes', dependencies = TRUE)
+&rightarrow; install.packages('ggthemes', dependencies = TRUE) [Theme for ggplot2]
+
+&rightarrow; install.packages('gridExtra') [For creating multiple histograms on a plot]
 
 ## Topics of Interest
 
