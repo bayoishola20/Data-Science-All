@@ -88,6 +88,9 @@ ggplot(aes(x = age), data = pf) +
   xlab('Facebook users age') +
   ylab('Number of users in sample')
 
+
+# TRANSFORMING DATA
+# ===============================
 install.packages('gridExtra')
 
 summary(pf$friend_count)
@@ -97,10 +100,31 @@ summary(sqrt(pf$friend_count))
 library(gridExtra)
 
 # scale_x_log10() to adjust the x-axis
+plot1 <- qplot(x = friend_count, data = pf)
+plot2 <- qplot(x = log10(friend_count + 1), data = pf)
+plot3 <- qplot(x = sqrt(friend_count), data = pf)
+
+grid.arrange(plot1, plot2, plot3, ncol = 1)
+
+plot4 <- ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram()
+plot5 <- plot1 <- ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram() + scale_x_log10()
+plot6 <- plot1 <- ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram() + scale_x_sqrt()
+
+grid.arrange(plot4, plot5, plot6, ncol = 1)
 
 
+## ADDING A SCALE LAYER
 
+logScale <- qplot(x = log10(friend_count), data = pf)
 
+countScale <- ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram() +
+  scale_x_log10()
+
+grid.arrange(logScale, countScale, ncol = 2)
 
 
 save.image("/var/www/example.com/public_html/Data-Science-All/workspace.RData")
