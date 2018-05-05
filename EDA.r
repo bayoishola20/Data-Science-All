@@ -96,4 +96,11 @@ summary(sqrt(pf$friend_count))
 
 library(gridExtra)
 
+# scale_x_log10() to adjust the x-axis
+
+
+
+
+
+
 save.image("/var/www/example.com/public_html/Data-Science-All/workspace.RData")
