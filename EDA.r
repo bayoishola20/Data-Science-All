@@ -1,8 +1,3 @@
-# ggplot2 comes default
-library(ggplot2)
-
-# install RColorBrewer
-library(RColorBrewer)
 
 # load midwest data
 data("midwest")
@@ -24,7 +19,7 @@ str(mtcars)
 subset(mtcars, mpg >= 30 | hp < 60)
 mtcars[mtcars$mpg >= 30 | mtcars$hp < 60, ]
 
-setwd("/var/www/example.com/public_html/Data-Science-All")
+
 reddit <- read.csv('reddit.csv')
 table(reddit$employment.status)
 str(reddit)
@@ -126,5 +121,55 @@ countScale <- ggplot(aes(x = friend_count), data = pf) +
 
 grid.arrange(logScale, countScale, ncol = 2)
 
+## FREQUENCY POLYGONS
 
+qplot(x = friend_count, data = subset(pf, !is.na(gender)),
+      binwidth = 10) +
+  scale_x_continuous(lim = c(0, 1000), breaks = seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+
+qplot(x = friend_count, y = ..count../sum(..count..),
+      data = subset(pf, !is.na(gender)),
+      xlab = 'Friend Count',
+      ylab = 'Proportion of Users with that of friend count',
+      binwidth = 10, geom = 'freqpoly', color = gender) +
+  scale_x_continuous(lim = c(0, 1000), breaks = seq(0, 1000, 50))
+
+ggplot(aes(x = friend_count, y = ..count../sum(..count..)),
+       data = subset(pf, !is.na(gender))) +
+  geom_freqpoly(aes(color = gender), binwidth=10) +
+  scale_x_continuous(limits = c(0, 1000),
+                     breaks = seq(0, 1000, 50)) +
+  xlab('Friend Count') +
+  ylab('Proportion of users with that friend count')
+
+qplot(x = www_likes, data = subset(pf, !is.na(gender)),
+      geom = 'freqpoly', color = gender) +
+  scale_x_log10()
+
+ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) +
+  geom_freqpoly(aes(color = gender)) +
+  scale_x_log10()
+
+## LIKES ON THE WEB
+
+by(pf$www_likes, pf$gender, sum)
+
+
+## BOX PLOTS
+
+
+
+#==============
+# CORE
+#==============
+
+setwd("/var/www/example.com/public_html/Data-Science-All")
+load("//var/www/example.com/public_html/Data-Science-All/workspace.RData")
 save.image("/var/www/example.com/public_html/Data-Science-All/workspace.RData")
+
+# ggplot2 comes default
+library(ggplot2)
+
+# install RColorBrewer
+library(RColorBrewer)
