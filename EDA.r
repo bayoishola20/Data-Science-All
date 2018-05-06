@@ -158,7 +158,54 @@ by(pf$www_likes, pf$gender, sum)
 
 ## BOX PLOTS
 
+qplot(x = gender, y = friend_count,
+      data = subset(pf, !is.na(gender)),
+      geom = 'boxplot',ylim = c(0, 1000))
 
+qplot(x = gender, y = friend_count,
+      data = subset(pf, !is.na(gender)),
+      geom = 'boxplot',
+      xlab = 'Gender',
+      ylab = 'Friend Count') +
+  scale_y_continuous(limits = c(0, 1000))
+
+qplot(x = gender, y = friend_count,
+      data = subset(pf, !is.na(gender)),
+      geom = 'boxplot',
+      xlab = 'Gender',
+      ylab = 'Friend Count') +
+  coord_cartesian(ylim = c(0, 1000))
+
+## BOX PLOTS, QUARTILES, AND FRIEND REQUESTS
+
+qplot(x = gender, y = friend_count,
+      data = subset(pf, !is.na(gender)),
+      geom = 'boxplot',
+      xlab = 'Gender',
+      ylab = 'Friend Count') +
+  coord_cartesian(ylim = c(0, 250))
+
+by(pf$friend_count, pf$gender, summary)
+
+qplot(x = gender, y = friendships_initiated,
+      data = subset(pf, !is.na(gender)),
+      geom = 'boxplot',
+      xlab = 'Gender',
+      ylab = 'Friendship Initiated') +
+  coord_cartesian(ylim = c(0, 250))
+
+by(pf$friendships_initiated, pf$gender, summary)
+
+# GETTING LOGICAL
+
+summary(pf$mobile_likes > 0)
+
+mobile_check_in <- NA
+
+pf$mobile_check_in <- ifelse(pf$mobile_likes > 0, 1, 0)
+pf$mobile_check_in <- factor(pf$mobile_check_in)
+summary(pf$mobile_check_in)
+sum(pf$mobile_check_in == 1)/length(pf$mobile_check_in) * 100
 
 #==============
 # CORE
