@@ -209,9 +209,42 @@ sum(pf$mobile_check_in == 1)/length(pf$mobile_check_in) * 100
 
 
 # =========== LESSON 4 ================ #
+# QUIZ 1
 dim(diamonds) # Number of observations and variables
 str(diamonds) # ordered factors
 str(diamonds$color) # best diamond color
+
+# QUIZ 2
+ggplot(diamonds) + 
+  geom_histogram(aes(x=price), binwidth = 100,
+                 color = "coral", fill = "red") +
+  xlab("Price")+
+  ylab("Diamonds Count") +
+  ggtitle("Diamonds Price Plot")
+
+# QUIZ 3
+
+summary(diamonds$price)
+
+# The shape of the graph depicts a right-skewed distribution of diamonds price with a median price of 2401 and a mean price of 3933.
+
+# QUIZ 4
+nrow(subset(diamonds, price < 500)) # numberof diamonds < $500
+nrow(subset(diamonds, price < 250))
+nrow(subset(diamonds, price > 15000 | price == 15000))
+
+# QUIZ 5
+ggplot(diamonds) + 
+  geom_histogram(aes(x=price), binwidth = 15, color = "coral",
+                 fill = "red") +
+  xlab("Price")+
+  ylab("Diamonds Count") +
+  ggtitle("Diamonds Price Histogram between $0 and $1000.") +
+  coord_cartesian(xlim=c(0,1000)) +
+  ggsave("plots/priceHistogram.png")
+
+
+
 
 #==============
 # CORE
