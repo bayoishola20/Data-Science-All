@@ -207,6 +207,12 @@ pf$mobile_check_in <- factor(pf$mobile_check_in)
 summary(pf$mobile_check_in)
 sum(pf$mobile_check_in == 1)/length(pf$mobile_check_in) * 100
 
+
+# =========== LESSON 4 ================ #
+dim(diamonds) # Number of observations and variables
+str(diamonds) # ordered factors
+str(diamonds$color) # best diamond color
+
 #==============
 # CORE
 #==============
