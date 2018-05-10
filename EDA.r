@@ -244,7 +244,22 @@ ggplot(diamonds) +
   ggsave("plots/priceHistogram.png")
 
 
+# QUIZ 6
+ggplot(diamonds) + 
+  geom_histogram(aes(x=price), binwidth = 100, color = "coral",
+                 fill = "red") +
+  xlab("Price")+
+  ylab("Diamonds Count") +
+  ggtitle("Price ~ Cut Histogram") +
+  facet_grid(~cut) +
+  ggsave("plots/priceCutHistogram.png")
 
+# QUIZ 7
+
+# Price by cut
+diamonds[which.max(diamonds$price),] # highest diamond price
+tapply(diamonds$price, diamonds$cut, min) # lowest diamond price
+by(diamonds$price,diamonds$cut,summary) # least median
 
 #==============
 # CORE
