@@ -261,6 +261,42 @@ diamonds[which.max(diamonds$price),] # highest diamond price
 tapply(diamonds$price, diamonds$cut, min) # lowest diamond price
 by(diamonds$price,diamonds$cut,summary) # least median
 
+# QUIZ 8
+
+# Scales and Multiple Histograms
+
+qplot(x = price, data = diamonds) + facet_wrap(~cut)
+
+by(diamonds$price, diamonds$cut, summary)
+
+ggplot(aes(x=price), data=diamonds) +
+  geom_histogram(binwidth=100, color='coral', fill='red') +
+  facet_wrap(~cut, scales="free")
+
+# QUIZ 9
+
+# Price per Carat by Cut
+
+ggplot(aes(x=price/carat), data=diamonds) +
+  geom_histogram(binwidth=0.03, color='coral', fill='red') +
+  ggtitle("Price per Carat by Cut") +
+  xlab("Price per Carat") +
+  scale_x_log10() +
+  facet_wrap(~cut)
+
+# QUIZ 10
+
+# Price Box Plots
+
+ggplot(aes(x = cut, y = price), data=diamonds) +
+  geom_boxplot() +
+  ggtitle("Price by box plots") +
+  ggsave("plots/priceBoxPlots.png")
+
+by(diamonds$price, diamonds$cut, summary)
+
+
+
 #==============
 # CORE
 #==============
