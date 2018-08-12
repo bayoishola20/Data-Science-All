@@ -52,11 +52,11 @@ leaflet(options = leafletOptions(
 library(tibble)
 dc_hq <- 
   tibble(
-    hq = c("DataCamp - NYC", "DataCamp - Belgium"),
-    lon = geocode(c("350 5th Ave, Floor 77, New York, NY 10118")),
-    lat = geocode(c("Martelarenlaan 38, 3010 Kessel-Lo, Belgium"))
+    hq = c("Lagos, Nigeria", "Abuja, Nigeria"),
+    lon = geocode(c("Lagos, Nigeria")),
+    lat = geocode(c("Abuja, Nigeria"))
   )
 
 leaflet() %>%
   addTiles() %>%
-  addMarkers(lng = dc_hq$lon, lat = dc_hq$lat)
+  addMarkers(lng = dc_hq$lon, lat = dc_hq$lat, popup = dc_hq$hq)
