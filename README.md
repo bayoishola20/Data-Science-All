@@ -18,6 +18,12 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages('gridExtra') [For creating multiple histograms on a plot]
 
+&rightarrow; install.packages('leaflet') [For leaflet maps]
+
+&rightarrow; install.packages('tidyverse') [All tidyverse packages]
+
+&rightarrow; install.packages('stringr') [Checks for a pattern]
+
 ## Topics of Interest
 
 * matplotlib
@@ -32,7 +38,8 @@ Tips, Tricks and Thoughts
 * Maximum likelihood
 * Generalized linear model
 
-- Machine Learning
+### Machine Learning
+
 * Scikit-learn
 * Supervised and unsupervised learning
 * Naive Bayes
@@ -48,5 +55,9 @@ Tips, Tricks and Thoughts
 Inspired by several online resources and personal encounters. :smiles:
 
 &rightarrow; https://www.statmethods.net/input/datatypes.html
+
+https://rstudio.github.io/leaflet/morefeatures.html
+
+https://www.datacamp.com/community/data-science-cheatsheets
 
 PS. Ubuntu is the OS used.

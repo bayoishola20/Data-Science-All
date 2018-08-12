@@ -241,7 +241,7 @@ ggplot(diamonds) +
   ylab("Diamonds Count") +
   ggtitle("Diamonds Price Histogram between $0 and $1000.") +
   coord_cartesian(xlim=c(0,1000)) +
-  ggsave("plots/priceHistogram.png")
+  ggsave("/plots/priceHistogram.png")
 
 
 # QUIZ 6
@@ -252,7 +252,7 @@ ggplot(diamonds) +
   ylab("Diamonds Count") +
   ggtitle("Price ~ Cut Histogram") +
   facet_grid(~cut) +
-  ggsave("plots/priceCutHistogram.png")
+  ggsave("/plots/priceCutHistogram.png")
 
 # QUIZ 7
 
@@ -291,7 +291,7 @@ ggplot(aes(x=price/carat), data=diamonds) +
 ggplot(aes(x = cut, y = price), data=diamonds) +
   geom_boxplot() +
   ggtitle("Price by box plots") +
-  ggsave("plots/priceBoxPlots.png")
+  ggsave("/plots/priceBoxPlots.png")
 
 by(diamonds$price, diamonds$cut, summary)
 
