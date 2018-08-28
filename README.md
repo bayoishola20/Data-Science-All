@@ -24,6 +24,17 @@ Tips, Tricks and Thoughts
 
 &rightarrow; install.packages('stringr') [Checks for a pattern]
 
+&rightarrow; install.packages("sbtools") [USGS package (https://owi.usgs.gov/R/training-curriculum/usgs-packages/) for USGS web platform for data storage]
+
+&rightarrow; install.packages("dataRetrieval") [USGS package (https://owi.usgs.gov/R/training-curriculum/usgs-packages/) for retrieving gages (hydrologic time series data) with discharge from watershed]
+
+&rarr; to get above two working, run `sudo apt-get install libudunits2-dev libxml2-dev`
+
+&rightarrow; install.packages("sf") [For "simple features" like shapefiles]
+
+&rightarrow; to get above working on terminal run `sudo apt install libgdal-dev`, then install.packages(c("proj4", "rgdal", "sf")). Check gdal using `gdalinfo --version`
+
+
 ## Topics of Interest
 
 * matplotlib
