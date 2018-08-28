@@ -35,6 +35,7 @@ Tips, Tricks and Thoughts
 &rightarrow; to get above working on terminal run `sudo apt install libgdal-dev`, then install.packages(c("proj4", "rgdal", "sf")). Check gdal using `gdalinfo --version`
 
 
+
 ## Topics of Interest
 
 * matplotlib
