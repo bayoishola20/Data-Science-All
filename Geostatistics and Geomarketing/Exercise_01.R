@@ -99,6 +99,10 @@ p2 <- hist(b, col = "blue", border = "white")
     # 4a)
     c <- seq(from = -100, to = 100)
     plot(c**2)
+    
+    # 4b)
+    d <- seq(from = 0, to = 6, length.out = 100)
+    plot(d, sin(d)) #sinus plot
 
 
 ## ************** Key Resource **************
