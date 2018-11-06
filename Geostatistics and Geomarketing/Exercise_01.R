@@ -22,7 +22,7 @@ vignette(package = "gstat") # get vignette for gstat
 
 vignette('gstat', package = NULL, lib.loc = NULL, all = TRUE) # This calls the print function which generates a PDF
 
-## 1d) vignette  “intro_sp”;  Content  of  this  vignette;  Its  different  spatial  data  types.
+## 1d) vignette  "intro_sp"  Content  of  this  vignette;  Its  different  spatial  data  types.
 # could't find "intro_sp" on CRAN Archive and went for sp which has one of its vignettes as intro_sp
 # https://win-builder.r-project.org/incoming_pretest/soiltexture_1.4.6_20180501_150209/Windows/examples_and_tests/tests_x64/soiltextureInfo.Rout
 
