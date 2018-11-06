@@ -95,7 +95,10 @@ p2 <- hist(b, col = "blue", border = "white")
 
 # COMMENTS: 
 
-
+## 4
+    # 4a)
+    c <- seq(from = -100, to = 100)
+    plot(c**2)
 
 
 ## ************** Key Resource **************
