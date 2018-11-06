@@ -103,8 +103,29 @@ p2 <- hist(b, col = "blue", border = "white")
     # 4b)
     d <- seq(from = 0, to = 6, length.out = 100)
     plot(d, sin(d)) #sinus plot
+    
+    # 4c)
+    e <- LETTERS
+    
+    # 4d)
+    f <- rep.int(1, 100)
 
 
+## 5
+    # 5a)
+    x <- matrix(data = -99, nrow = 10, ncol = 10)
+    
+    # 5b)
+    y <- matrix(data = runif(100), nrow = 100, ncol = 100)
+    
+    # 5c)
+    z <- matrix(data = -99, nrow = 10, ncol = 10)
+    
+    # 5d)
+    image(x)
+    image(y)
+    
+    
 ## ************** Key Resource **************
   # http://www.cookbook-r.com/Numbers/Generating_random_numbers/
 ## ************** Key Resource **************
