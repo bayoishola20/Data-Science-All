@@ -95,21 +95,20 @@ p2 <- hist(b, col = "blue", border = "white")
 
 # COMMENTS: 
 
-<<<<<<< HEAD
-
 ## 4)
 
   # 4a)
   c <- seq(from = -100, to = 100)
   
-  plot(c**2)
+  plot(c**2) #plot(c^2) is also an alternative
   
   # 4b)
   d <- seq(from = 0, to = 6, length.out = 100)
   plot(d, sin(d)) #sinus plot
   
   # 4c)
-  e <- LETTERS
+  e <- LETTERS #OR
+  e <- c(LETTERS)
   
   # 4d)
   f <- rep.int(1, 100)
@@ -119,11 +118,11 @@ p2 <- hist(b, col = "blue", border = "white")
   # 5a)
   x <- matrix(data = -99, nrow = 10, ncol = 10)
   
-  # 5b)
-  y <- matrix(data = runif(100), nrow = 100, ncol = 100)
+  # 5b) 100 by 100 matrix consisting of uniformly distributed values
+  y <- matrix(data = runif(10000), nrow = 100, ncol = 100)
   
   # 5c)
-  z <- matrix(data = -99, nrow = 10, ncol = 10)
+  z <- y > 0.5
   
   # 5d)
   image(x)
@@ -131,39 +130,6 @@ p2 <- hist(b, col = "blue", border = "white")
 
 
 
-=======
-## 4
-    # 4a)
-    c <- seq(from = -100, to = 100)
-    plot(c**2)
-    
-    # 4b)
-    d <- seq(from = 0, to = 6, length.out = 100)
-    plot(d, sin(d)) #sinus plot
-    
-    # 4c)
-    e <- LETTERS
-    
-    # 4d)
-    f <- rep.int(1, 100)
-
-
-## 5
-    # 5a)
-    x <- matrix(data = -99, nrow = 10, ncol = 10)
-    
-    # 5b)
-    y <- matrix(data = runif(100), nrow = 100, ncol = 100)
-    
-    # 5c)
-    z <- matrix(data = -99, nrow = 10, ncol = 10)
-    
-    # 5d)
-    image(x)
-    image(y)
-    
-    
->>>>>>> 83ed02eddecfe38fb06a943a0a745a2a4d05803d
 ## ************** Key Resource **************
   # http://www.cookbook-r.com/Numbers/Generating_random_numbers/
 ## ************** Key Resource **************
