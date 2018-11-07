@@ -96,6 +96,38 @@ p2 <- hist(b, col = "blue", border = "white")
 # COMMENTS: 
 
 
+## 4)
+
+  # 4a)
+  c <- seq(from = -100, to = 100)
+  
+  plot(c**2)
+  
+  # 4b)
+  d <- seq(from = 0, to = 6, length.out = 100)
+  plot(d, sin(d)) #sinus plot
+  
+  # 4c)
+  e <- LETTERS
+  
+  # 4d)
+  f <- rep.int(1, 100)
+  
+  
+  ## 5
+  # 5a)
+  x <- matrix(data = -99, nrow = 10, ncol = 10)
+  
+  # 5b)
+  y <- matrix(data = runif(100), nrow = 100, ncol = 100)
+  
+  # 5c)
+  z <- matrix(data = -99, nrow = 10, ncol = 10)
+  
+  # 5d)
+  image(x)
+  image(y)
+
 
 
 ## ************** Key Resource **************
