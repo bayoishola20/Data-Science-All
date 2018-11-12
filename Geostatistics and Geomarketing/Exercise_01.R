@@ -36,6 +36,7 @@ library("sp") # Activate package
 # over                           sp: overlay and aggregation (source, pdf)
 
 # ===================================Vignettes in package ‘sp’:====================
+
 vignette("intro_sp", package = "sp", lib.loc = NULL, all = TRUE) # prints a PDF
 
 # =================================== Spatial Data Class of vignette ‘intro_sp’:===========
@@ -88,8 +89,10 @@ help("runif")
 a <- runif(100) # 100 random numbers
 min(a) # minumum value
 max(a) # maximum value
-b <- runif(1000, min=0, max=100) #1000 uniformly distributed random numbers between 0 & 100
+b <- runif(1000, min=0, max=100) #1000 uniformly distributed random integers between 0 & 100
+
 par(mfrow=c(1,2)) # to help with side-by-side comparison
+
 p1 <- hist(a, col = "red", border = "white")
 p2 <- hist(b, col = "blue", border = "white")
 
@@ -100,11 +103,11 @@ p2 <- hist(b, col = "blue", border = "white")
   # 4a)
   c <- seq(from = -100, to = 100)
   
-  plot(c**2) #plot(c^2) is also an alternative
+  plot(c**2, main = "Plot of c^2") #plot(c^2) is also an alternative
   
   # 4b)
   d <- seq(from = 0, to = 6, length.out = 100)
-  plot(d, sin(d)) #sinus plot
+  plot(d, sin(d), main = "Sinus plot of d") #sinus plot
   
   # 4c)
   e <- LETTERS #OR
@@ -115,6 +118,7 @@ p2 <- hist(b, col = "blue", border = "white")
   
   
   ## 5
+  ?matrix # matrix help documentation
   # 5a)
   x <- matrix(data = -99, nrow = 10, ncol = 10)
   
