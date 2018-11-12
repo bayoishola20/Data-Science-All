@@ -3,6 +3,8 @@ help.start()
 
 ## 1b) Search for "hist" help.
 help.search("hist")
+diamonds #load R default data of Diamonds
+hist(diamonds$price, col = "brown", border = "white", main = "Histogram of price of diamonds")
 
 ## 1c) Vignettes for GSTAT (Spatial and Spatio-Temporal Geostatistical Modelling, Prediction and Simulation)
 
