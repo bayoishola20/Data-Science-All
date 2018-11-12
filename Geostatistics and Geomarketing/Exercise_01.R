@@ -89,6 +89,8 @@ help("runif")
 a <- runif(100) # 100 random numbers
 min(a) # minumum value
 max(a) # maximum value
+range(a) # range
+
 b <- runif(1000, min=0, max=100) #1000 uniformly distributed random integers between 0 & 100
 
 par(mfrow=c(1,2)) # to help with side-by-side comparison
