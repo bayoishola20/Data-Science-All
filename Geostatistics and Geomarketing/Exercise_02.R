@@ -61,13 +61,23 @@ str(meuse)
 
 summary(meuse) # main	statistical	parametersfor	every	column
 
+# 3b)
+
 length(meuse) # this means that there are 14 variables
+
+# 3c)
 
 length(meuse$zinc) # this means that there are 155 observations
 
+# 3d)
+
 class(meuse$cadmium) # class type of cadmium: numeric data of float type
 
+# 3e)
+
 class(meuse$soil) # class type of cadmium: factor data with three levels (1, 2 and 3)
+
+# 3f)
 
 names(meuse) # column	names	of the	meuse	dataset
 
@@ -75,11 +85,11 @@ names(meuse) # column	names	of the	meuse	dataset
 
 meuse.spdf <- meuse # conversion of meuse to SpatialPointsDataFrame
 
-coordinates(meuse.spdf) <- c("x", "y") # x,y coordinates concantenation & becomes a class
+coordinates(meuse.spdf) <- c("x", "y") # x,y coordinates concatenation & becomes a class
 
 proj4string(meuse.spdf) <- CRS("+init=epsg:28992")
 
-class(meuse.spdf)
+meuse.spdf@proj4string # check
 
 plot(meuse.spdf, main = "SpatialPointsDataFrame")
 
