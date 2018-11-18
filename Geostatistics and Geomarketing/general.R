@@ -7,6 +7,7 @@
 # VECTOR vs. RASTER DATA
 # For vector data, you are storing only vertices and edges. In Raster, you are storing pixels and this takes up more space.
 
+library("sp") # activate spatial first
 getClass("Spatial") # get "Spatial" classes
 
 x <- rnorm(10)
@@ -26,7 +27,7 @@ xy.sp <- SpatialPoints(xy)
 class(xy.sp)
 
 plot(xy)
-plot(xy.sp)
+plot(xy.sp, pch = 3) # default or 3 is cross; 0 is square; 1 is circle; 2 is triangle;
 
 
 summary(xy.sp)
@@ -59,8 +60,23 @@ z <- data.frame(z)
 
 xy.spdf <- SpatialPointsDataFrame(xy.sp, z)
 
+xy.spdf
+
 summary(xy.spdf) # a summary
 
 str(xy.spdf) # find the structure
 
+bbox(xy.spdf) # find bounding box coordinates
+
+proj4string(xy.spdf) # check projection system
+
+coordinates(xy.spdf)
+
+xy.spdf@data
+
+xy.spdf@coords
+
+xy.spdf@bbox
+
+xy.spdf@proj4string
 
