@@ -83,7 +83,7 @@ class(meuse.spdf)
 
 plot(meuse.spdf, main = "SpatialPointsDataFrame")
 
-summary(meuse.spdf) # a summary
+summary(meuse.spdf) # a statistical summary
 
 bbox(meuse.spdf) # find bounding box coordinates
 
