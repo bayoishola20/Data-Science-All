@@ -5,7 +5,11 @@ getClass("Spatial") # get "Spatial" classes
 
 x <- runif(100, min = 4000000, max = 4010000) # intgers
 
+# x <- sample(4000000:4010000, 100) alternatively
+
 y <- runif(100, min = 5205000,	max = 5205500) # integers
+
+# y <- sample(5205000:5205500, 100) alternatively
 
 z <- runif(100, min = 500,	max = 600) # float
 
