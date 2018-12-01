@@ -97,7 +97,39 @@ gwt_sub.spdf@bbox # access the boundary box
 
 # 2 Load "meuse.grid"
 
+data("meuse.grid") # load "meuse.grid" data from package "sp"
+class(meuse.grid)
 
+# 2a) SpatialGridDataFrame of soil
+
+# creation of "SpatialPointsDataFrame"
+meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
+
+coordinates(meuse.grid_SPointDF) = c("x", "y") # promotion to SpatialPointsDataFrame
+class(meuse.grid_SPointDF) # confirm object class as "SpatialPointsDataFrame"
+
+# creation of "SpatialPixelsDataFrame"
+meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame
+class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
+
+
+# creation of "SpatialGridDataFrame"
+meuse.grid_SGridDF <- as(meuse.grid_SPixelDF, "SpatialGridDataFrame") # promotion to SpatialGridDataFrame
+class(meuse.grid_SGridDF) # confirm object class as "SpatialGridDataFrame"
+
+# plots with plot,image	and	spplot
+plot(meuse.grid_SGridDF, main = "meuse.grid SpatialGridDataFrame (plot)", col = rainbow(12)) # plot
+image(meuse.grid_SGridDF, main = "meuse.grid SpatialGridDataFrame (image)", col = topo.colors(15)) # image
+spplot(meuse.grid_SGridDF) # spplot
+
+
+
+# par(mfrow=c(1,3)) # to help with side-by-side comparison
+
+
+
+
+# gridded(meuse_grid) <- TRUE
 
 ## Additional resources
 ## https://cran.r-project.org/web/packages/rio/vignettes/rio.html#data_import
