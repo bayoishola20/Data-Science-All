@@ -105,7 +105,16 @@ class(meuse.grid)
 # creation of "SpatialPointsDataFrame"
 meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
 
-coordinates(meuse.grid_SPointDF) = c("x", "y") # promotion to SpatialPointsDataFrame
+meuse.grid_xy = cbind(meuse.grid$x, meuse.grid$y) # promotion to coordinates
+
+meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SPatialPoints
+
+soil <- meuse.grid$soil #selection of soil attributes to create SpatialPointsDataFrame
+
+soil <- data.frame(soil) # conversion of soil class from factor to data.frame
+
+meuse.grid_SPointDF <- SpatialPointsDataFrame(meuse.grid_SPoints, soil) # promotion to SpatialPointsDataFrame
+
 class(meuse.grid_SPointDF) # confirm object class as "SpatialPointsDataFrame"
 
 # creation of "SpatialPixelsDataFrame"
