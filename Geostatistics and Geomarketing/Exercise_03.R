@@ -100,18 +100,18 @@ gwt_sub.spdf@bbox # access the boundary box
 data("meuse.grid") # load "meuse.grid" data from package "sp"
 class(meuse.grid)
 
-# 2a) SpatialGridDataFrame of soil
+# 2a) SpatialGridDataFrame of attribute soil
 
 # creation of "SpatialPointsDataFrame"
 meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
 
 meuse.grid_xy = cbind(meuse.grid$x, meuse.grid$y) # promotion to coordinates
 
-meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SPatialPoints
+meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SpatialPoints
 
 soil <- meuse.grid$soil #selection of soil attributes to create SpatialPointsDataFrame
 
-soil <- data.frame(soil) # conversion of soil class from factor to data.frame
+soil <- data.frame(soil) # conversion of soil datatype from factor to data.frame
 
 meuse.grid_SPointDF <- SpatialPointsDataFrame(meuse.grid_SPoints, soil) # promotion to SpatialPointsDataFrame
 
@@ -136,9 +136,39 @@ spplot(meuse.grid_SGridDF) # spplot
 # par(mfrow=c(1,3)) # to help with side-by-side comparison
 
 
+# 2b) SpatialPixelsDataFrame of attribute soil
+
+# creation of "SpatialPointsDataFrame"
+meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
+
+meuse.grid_xy = cbind(meuse.grid$x, meuse.grid$y) # promotion to coordinates
+
+meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SpatialPoints
+
+soil <- meuse.grid$soil #selection of soil attributes to create SpatialPointsDataFrame
+
+soil <- data.frame(soil) # conversion of soil datatype from factor to data.frame
+
+meuse.grid_SPointDF <- SpatialPointsDataFrame(meuse.grid_SPoints, soil) # promotion to SpatialPointsDataFrame
+
+class(meuse.grid_SPointDF) # confirm object class as "SpatialPointsDataFrame"
+
+# creation of "SpatialPixelsDataFrame"
+meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame
+class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
+
+plot(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (plot)", col = rainbow(12)) # plot
+image(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (image)", col = topo.colors(15)) # image
+spplot(meuse.grid_SPixelDF) # spplot
 
 
-# gridded(meuse_grid) <- TRUE
+# 2c) Difference between the SpatialGridDataFrame and	the	SpatialPixelsDataFrame
+
+
+
+# 3)
+
+
 
 ## Additional resources
 ## https://cran.r-project.org/web/packages/rio/vignettes/rio.html#data_import
