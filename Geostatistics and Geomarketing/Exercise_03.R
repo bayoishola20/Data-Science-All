@@ -159,16 +159,55 @@ class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
 
 plot(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (plot)", col = rainbow(12)) # plot
 image(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (image)", col = topo.colors(15)) # image
-spplot(meuse.grid_SPixelDF) # spplot
+spplot(meuse.grid_SPixelDF["soil"], main="SpatialPixelsDataFrame spplot") # spplot
 
 
 # 2c) Difference between the SpatialGridDataFrame and	the	SpatialPixelsDataFrame
 
+# SpatialPixelsDataFrame is directly from SpatialPoints or SpatialPointsDataFrame whereas SpatialGridDataFrame is always created from GridTopology or SpatialPixels.
+
+# SpatialPixelsDataFrame is composed of Irregular Grid whereas SpatialGridDataFrame is composed of Regular Grid
+
+# SpatialPixelsDataFrame Grid Points have always Data Values whereas SpatialGridDataFrame Grid Points are without Data Values (NaN)
+
+# 3) Load dataset	“wrld_simpl” from	“maptools” package
+
+require(maptools) # load "maptools" package. rgeos is a core dependency
+library("maptools") # alternative: load "maptools" package
+
+data("wrld_simpl")
+
+#3 a) Examine	the	dataset	“wrld_simpl”	with	the	generic	methods	str(),	summary(),	coordinates(),	bbox()	and	proj4string()	and	print	the	results.
+
+str(wrld_simpl) # structure of "wrld_simpl"
+summary(wrld_simpl) # statistical summary of "wrld_simpl"
+coordinates(wrld_simpl) # coordinates of "wrld_simpl"
+bbox(wrld_simpl) # boundary box of "wrld_simpl"
+proj4string(wrld_simpl) # projection of "wrld_simpl"
+
+# 3b) Access	the	dataset	“wrld_simpl”	with	the	slot	operator	to	get	informations	about	the	attribute	data
+# @ - slot operator
+
+str(wrld_simpl@data) # gets structure of the attribute "data".
+
+str(wrld_simpl@polygons) # gets structure of the attribute "polygons".
+
+str(wrld_simpl@proj4string) # gets structure of the attribute "proj4string"
+
+str(wrld_simpl@bbox) # gets structure of the attribute "bbox".
 
 
-# 3)
+# 3c) Subset the “wrld_simpl”	dataset	for	your home	country	and	plot it	with the color “red”.
+
+nigeria <- wrld_simpl[wrld_simpl$NAME=="Nigeria",]
+class(nigeria)
+str(nigeria,max.level=3)
+plot(nigeria, col="red", main = "Boundary Map of Nigeria.", border="white", bg)
 
 
+# 3d) Plot	the	whole	“wrld_simpl”	dataset	with	spplot	using	the	attributes	“NAME”,	“REGION”	and	“POP2005”.	Try	different	color	palettes,	e.g.	rainbow,	topo,	bpy,	...	
+
+spplot(wrld_simpl, "NAME", colorkey=FALSE, col.regions = rainbow(length(wrld_simpl$REGION)), main="Map of the World")
 
 ## Additional resources
 ## https://cran.r-project.org/web/packages/rio/vignettes/rio.html#data_import
