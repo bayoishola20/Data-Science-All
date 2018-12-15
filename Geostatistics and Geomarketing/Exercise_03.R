@@ -1,3 +1,5 @@
+
+#=========================================Q1====================================
 # 1a)	Load	the	Dataset	“Groundwater_Temperature.xls”
 
 install.packages("rio") # install rio package to help with data conversion
@@ -94,7 +96,7 @@ gwt_sub.spdf@proj4string # read CRS which was inherited epsg:31468
 gwt_sub.spdf@bbox # access the boundary box
 
 
-
+#=========================================Q2====================================
 # 2 Load "meuse.grid"
 
 data("meuse.grid") # load "meuse.grid" data from package "sp"
@@ -105,20 +107,14 @@ class(meuse.grid)
 # creation of "SpatialPointsDataFrame"
 meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
 
-meuse.grid_xy = cbind(meuse.grid$x, meuse.grid$y) # promotion to coordinates
+coordinates(meuse.grid_SPointDF) <- c("x", "y") # setting coordinates and promotion to SpatialPointsDataFrame
 
-meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SpatialPoints
+meuse.grid_SPointDF@coords # to acccess the coordinates slot @
 
-soil <- meuse.grid$soil #selection of soil attributes to create SpatialPointsDataFrame
-
-soil <- data.frame(soil) # conversion of soil datatype from factor to data.frame
-
-meuse.grid_SPointDF <- SpatialPointsDataFrame(meuse.grid_SPoints, soil) # promotion to SpatialPointsDataFrame
-
-class(meuse.grid_SPointDF) # confirm object class as "SpatialPointsDataFrame"
+class(meuse.grid_SPointDF) # calidate object class is "SpatialPointsDataFrame"
 
 # creation of "SpatialPixelsDataFrame"
-meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame
+meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame to SpatialPixelsDataFrame
 class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
 
 
@@ -127,11 +123,9 @@ meuse.grid_SGridDF <- as(meuse.grid_SPixelDF, "SpatialGridDataFrame") # promotio
 class(meuse.grid_SGridDF) # confirm object class as "SpatialGridDataFrame"
 
 # plots with plot,image	and	spplot
-plot(meuse.grid_SGridDF, main = "meuse.grid SpatialGridDataFrame (plot)", col = rainbow(12)) # plot
-image(meuse.grid_SGridDF, main = "meuse.grid SpatialGridDataFrame (image)", col = topo.colors(15)) # image
-spplot(meuse.grid_SGridDF) # spplot
-
-
+plot(meuse.grid_SGridDF["soil"], main = "meuse.grid SpatialGridDataFrame soil attribute (plot)", col = rainbow(3)) # plot
+image(meuse.grid_SGridDF["soil"], main = "meuse.grid SpatialGridDataFrame soil attribute (image)", col = topo.colors(3)) # image
+spplot(meuse.grid_SGridDF["soil"], main = "meuse.grid SpatialGridDataFrame soil attribute (ssplot)") # spplot
 
 # par(mfrow=c(1,3)) # to help with side-by-side comparison
 
@@ -141,25 +135,23 @@ spplot(meuse.grid_SGridDF) # spplot
 # creation of "SpatialPointsDataFrame"
 meuse.grid_SPointDF <- meuse.grid # assigning as variable to keep main data untouched
 
-meuse.grid_xy = cbind(meuse.grid$x, meuse.grid$y) # promotion to coordinates
+coordinates(meuse.grid_SPointDF) <- c("x", "y") # setting coordinates and promotion to SpatialPointsDataFrame
 
-meuse.grid_SPoints <- SpatialPoints(meuse.grid_xy) # promotion to SpatialPoints
+meuse.grid_SPointDF@coords # to acccess the coordinates slot @
 
-soil <- meuse.grid$soil #selection of soil attributes to create SpatialPointsDataFrame
-
-soil <- data.frame(soil) # conversion of soil datatype from factor to data.frame
-
-meuse.grid_SPointDF <- SpatialPointsDataFrame(meuse.grid_SPoints, soil) # promotion to SpatialPointsDataFrame
-
-class(meuse.grid_SPointDF) # confirm object class as "SpatialPointsDataFrame"
+class(meuse.grid_SPointDF) # calidate object class is "SpatialPointsDataFrame"
 
 # creation of "SpatialPixelsDataFrame"
-meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame
+meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame to SpatialPixelsDataFrame
 class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
 
-plot(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (plot)", col = rainbow(12)) # plot
-image(meuse.grid_SPixelDF, main = "meuse.grid SpatialPixelsDataFrame (image)", col = topo.colors(15)) # image
-spplot(meuse.grid_SPixelDF["soil"], main="SpatialPixelsDataFrame spplot") # spplot
+
+# plots with plot,image	and	spplot
+plot(meuse.grid_SPixelDF["soil"], main = "meuse.grid SpatialPixelDataFrame soil attribute (plot)", col = rainbow(3)) # plot: n val of rainbow must equal factor levels of soil which is 3. (1,2,3)
+image(meuse.grid_SPixelDF["soil"], main = "meuse.grid SpatialPixelDataFrame soil attribute (image)", col = topo.colors(3)) # image
+spplot(meuse.grid_SPixelDF["soil"], main = "meuse.grid SpatialPixelDataFrame soil attribute (ssplot)") # spplot
+
+# par(mfrow=c(1,3)) # to help with side-by-side comparison
 
 
 # 2c) Difference between the SpatialGridDataFrame and	the	SpatialPixelsDataFrame
@@ -177,6 +169,8 @@ library("maptools") # alternative: load "maptools" package
 
 data("wrld_simpl")
 
+
+#=========================================Q3====================================
 #3 a) Examine	the	dataset	“wrld_simpl”	with	the	generic	methods	str(),	summary(),	coordinates(),	bbox()	and	proj4string()	and	print	the	results.
 
 str(wrld_simpl) # structure of "wrld_simpl"
@@ -202,12 +196,16 @@ str(wrld_simpl@bbox) # gets structure of the attribute "bbox".
 nigeria <- wrld_simpl[wrld_simpl$NAME=="Nigeria",]
 class(nigeria)
 str(nigeria,max.level=3)
-plot(nigeria, col="red", main = "Boundary Map of Nigeria.", border="white", bg)
+plot(nigeria, col="red", main = "Boundary Map of Nigeria.", border="white", bg="gray")
 
 
 # 3d) Plot	the	whole	“wrld_simpl”	dataset	with	spplot	using	the	attributes	“NAME”,	“REGION”	and	“POP2005”.	Try	different	color	palettes,	e.g.	rainbow,	topo,	bpy,	...	
 
-spplot(wrld_simpl, "NAME", colorkey=FALSE, col.regions = rainbow(length(wrld_simpl$REGION)), main="Map of the World")
+spplot(wrld_simpl, "NAME", colorkey=FALSE, col.regions = rainbow(length(wrld_simpl$NAME)), main="Map of the World by country name", border="white") # map of the world by country name using rainbow color scheme
+
+spplot(wrld_simpl, "REGION", colorkey=FALSE, col.regions = bpy.colors(length(wrld_simpl$REGION+1)), main="Map of the World by region") # map of the world by countries using bpy color scheme
+
+spplot(wrld_simpl, "POP2005", colorkey=FALSE, col.regions = rainbow(length(wrld_simpl$POP2005)), main="Map of the World by 2002 Census Data") # map of the world by 2002 census data using rainbow color scheme
 
 ## Additional resources
 ## https://cran.r-project.org/web/packages/rio/vignettes/rio.html#data_import
