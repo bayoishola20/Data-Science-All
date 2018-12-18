@@ -62,7 +62,7 @@ par(mfrow=c(1,2)) # to help with side-by-side comparison
 
 plot(gwt_sub.sp, pch=1, main = "Using SpatialPoints [gwt_sub.sp]", xlab = "X-coordinates", ylab = "Y-coordinates", col = "blue", lwd = 1) # plot of Groundwater dataset using SpatialPoints
 
-plot(gwt_sub, pch=1, main = "Without SpatialPoints [gwt_sub]", xlab = "X-coordinates", ylab = "Y-coordinates", col = "red", lwd = 1) # plot of Groundwater dataset without SpatialPoints
+plot(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, pch=1, main = "Without SpatialPoints [gwt_sub]", xlab = "X-coordinates", ylab = "Y-coordinates", col = "blue", lwd = 1) # plot of Groundwater dataset without SpatialPoints
 
 # Difference between SpatialPoints object	(gwt_sub.sp)	and	the	Data	Frame	object	(gwt_sub)	is,	that	the	 SpatialPoints	object	is	lacking	attribute	data.
 
@@ -145,7 +145,7 @@ class(meuse.grid_SPointDF) # calidate object class is "SpatialPointsDataFrame"
 meuse.grid_SPixelDF <- SpatialPixelsDataFrame(coordinates(meuse.grid_SPointDF), data = meuse.grid) # promotion of SpatialPointsDataFrame to SpatialPixelsDataFrame
 class(meuse.grid_SPixelDF) # confirm object class as "SpatialPixelsDataFrame"
 
-
+par(mfrow=c(1,3)) # to help with side-by-side comparison
 # plots with plot,image	and	spplot
 plot(meuse.grid_SPixelDF["soil"], main = "meuse.grid SpatialPixelDataFrame soil attribute (plot)", col = rainbow(3)) # plot: n val of rainbow must equal factor levels of soil which is 3. (1,2,3)
 image(meuse.grid_SPixelDF["soil"], main = "meuse.grid SpatialPixelDataFrame soil attribute (image)", col = topo.colors(3)) # image
