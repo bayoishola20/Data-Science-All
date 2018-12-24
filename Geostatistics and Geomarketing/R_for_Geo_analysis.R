@@ -100,3 +100,24 @@ x > 10
 
 x[x > 10]
 
+x[x>85 & x< 95]
+
+x[x>85 | x < 95]
+
+x = c(2:10)
+
+mean(x)
+
+x[2] = NA
+
+mean(x) #mean of a vector with at least one NA will produce NA
+
+is.na(x)
+
+!is.na(x)
+
+x[!is.na(x)]
+
+mean(x[!is.na(x)]) # calculate mean of vectors while removing NA
+
+mean(x, na.rm = T) # remove NA and calculate mean
