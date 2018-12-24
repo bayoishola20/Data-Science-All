@@ -121,3 +121,17 @@ x[!is.na(x)]
 mean(x[!is.na(x)]) # calculate mean of vectors while removing NA
 
 mean(x, na.rm = T) # remove NA and calculate mean
+
+max(x, na.rm = T)
+
+add_two = function(x) {
+  x_plus_two = x + 2
+  return(x_plus_two)
+}
+
+add_two(102)
+
+
+add_five = function(x) x + 5 # function with no parentheses
+
+add_five(2)
