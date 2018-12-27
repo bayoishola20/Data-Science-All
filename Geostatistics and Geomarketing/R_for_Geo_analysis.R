@@ -135,3 +135,52 @@ add_two(102)
 add_five = function(x) x + 5 # function with no parentheses
 
 add_five(2)
+
+# ?ts ??zoo and ??xts are time series classes in R
+
+# dat = read.csv("C:\\Data\\338284.csv", stringsAsFactors = FALSE)
+
+# converting character values to dates
+# "Date" and "factor" objects are not vectors in R since they have additional attributes not present in the vector class
+
+x = Sys.Date()
+
+x
+
+class(x)
+
+y = Sys.time()
+
+y
+
+class(y)
+
+x + 6 # 6 days from today
+
+x = as.character(x)
+
+x
+
+class(x)
+
+
+x = as.Date(x)
+
+x
+
+class(x)
+
+seq(from = as.Date("2018-01-01"),
+    to = as.Date("2018-02-01"),
+    by =3) # sequence of consecutive days
+
+
+# Symbol Meaning
+# %d      Day (for example, 15)
+# %m      Months in number (for example, 08)
+# %b      The first three characters of a month (for example, Aug)
+# %B      The full name of a month (for example, August)
+# %y      The last two digits of a year (for example, 14)
+# %Y      The full year (for example, 2014)
+
+
