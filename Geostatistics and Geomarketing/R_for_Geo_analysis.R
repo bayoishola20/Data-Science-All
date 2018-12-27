@@ -170,17 +170,32 @@ x
 
 class(x)
 
+# the below is written as year-month-day
 seq(from = as.Date("2018-01-01"),
     to = as.Date("2018-02-01"),
     by =3) # sequence of consecutive days
 
 
 # Symbol Meaning
-# %d      Day (for example, 15)
-# %m      Months in number (for example, 08)
-# %b      The first three characters of a month (for example, Aug)
-# %B      The full name of a month (for example, August)
-# %y      The last two digits of a year (for example, 14)
-# %Y      The full year (for example, 2014)
+# %d      Day
+# %m      Months in number
+# %b      The first three characters of a month
+# %B      The full name of a month
+# %y      The last two digits of a year
+# %Y      The full year
+
+as.Date("07/Aug/12", format = "%d/%b/%y")
+
+d = as.Date("2018-12-27")
+
+d
+
+format(d, "%d")
+format(d, "%B")
+format(d, "%Y")
+format(d, "%d/%m/%Y")
 
 
+class(time) # function
+
+class(tmax)
