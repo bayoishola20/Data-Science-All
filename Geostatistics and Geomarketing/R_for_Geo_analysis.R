@@ -199,3 +199,67 @@ format(d, "%d/%m/%Y")
 class(time) # function
 
 class(tmax)
+
+
+#which(!(all_dates %in% time)) #find missing index
+
+# all_dates[which(!(all_dates %in% time))] #find its index value
+
+# plot(time, tmax, type = "l") # x-values (observations), y-values, l is line-type
+
+# plot(tmax ~ time, type = "l") # tmax is the dependent variable and thus plotted on the y-xis while time is independentand so x-xis
+
+# pdf("C:\\Data\\time_series.pdf") # path directories \\ as / is used differently in R
+# plot(tmax ~ time, type = "l")
+# dev.off() # turn PDF off and use default graphics
+
+
+# dat = data.frame(time = time, tmax = tmax)
+# Base graphics
+# plot(tmax ~ time, dat, type = "l")
+# lattice
+# library(lattice)
+# xyplot(tmax ~ time, data = dat, type = "l")
+# ggplot2
+# library(ggplot2)
+# ggplot(dat, aes(x = time, y = tmax)) +
+# geom_line()
+
+# The data.frame class is the basic class to represent tabular data in R. A data.frame object is essentially a collection of vectors, all with the same length.
+
+num = 1:4
+lower = c("a", "b", "c", "d")
+upper = c("A", "B", "C", "D")
+names = c("bayo", "yusuf", "adebayo", "ishola")
+
+df = data.frame(num, lower, upper)
+df
+
+df = data.frame(
+  num = 1:4,
+  lower = c("a", "b", "c", "d"),
+  upper = c("A", "B", "C", "D"),
+  names = c("bayo", "yusuf", "adebayo", "ishola")
+)
+
+str(df) # this gives lower, upper and names as FACTORS
+
+df =  data.frame(num,lower,upper,names,
+                 stringsAsFactors = FALSE)
+
+row5 <- c(5, "e", "E")
+
+rbind(df, row5) # automatically adds increment sequence of column num
+
+word = c("One","Two","Three","Four")
+
+cbind(df, word, stringsAsFactors = FALSE)
+
+
+
+head() # returns first and last part of vector but returns headings for table
+nrow() # find number of rows
+ncol() # find number of columns
+
+dim() # get lengths of row and column of data frame
+
