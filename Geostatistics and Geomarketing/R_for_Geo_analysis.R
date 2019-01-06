@@ -257,9 +257,43 @@ cbind(df, word, stringsAsFactors = FALSE)
 
 
 
-head() # returns first and last part of vector but returns headings for table
-nrow() # find number of rows
-ncol() # find number of columns
+head(dat) # returns first and last part of vector but returns headings and first set of several data of table
+tail(dat) # does the opposite of head()
+nrow(dat) # find number of rows
+ncol(dat) # find number of columns
 
-dim() # get lengths of row and column of data frame
+dim(dat) # gets length of row and column of data frame
 
+colnames(dat) # get colnames of data
+colnames(dat) = tolower(colnames(dat))
+
+colnames(dat)
+
+df$num # subsetting
+
+# dat$tpcp[dat$tpcp == -9999] = NA # assigning -9999 as NA
+
+df[2,3] # row and column
+
+df[2,]
+
+df[,3]
+
+# DATA FRAMES ARE NON-ZERO-INDEX BASED
+
+df[, 3, drop = FALSE] # column delete as FALSE
+
+df[df$lower %in% c("a","d"), c("lower", "upper")] # get the subset of df with the rows being where the values of the lower column are either "a" or "d" , and the columns are both lower and upper .
+
+
+dat[complete.cases(dat), ] # returns logical vector. When complete (no NA's, it returns TRUE)
+
+df$names[df$num==2] = "Name"
+
+write.csv(df, "C:\\Data\\df.csv") # write dataframe to csv
+
+# CONDITIONING
+
+x = 3
+
+if(x >= 2) { print("x is large!")} else {print("x is small")}
