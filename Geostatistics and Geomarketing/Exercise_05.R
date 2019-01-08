@@ -51,13 +51,13 @@ gwt_sub <- gwt[gwt$Surface > 0,] # alternative subsetting values of Surface vari
 
 marks = gwt_sub$Temperature # get temperature values
 
-Xppp <- ppp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, marks=gwt_sub$Surface, window=owin(c(min(gwt_sub$X_Coordinate),max(gwt_sub$X_Coordinate)), c(min(gwt_sub$Y_Coordinate),max(gwt_sub$Y_Coordinate))))
+Xppp <- ppp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, marks=gwt_sub$Temperature, window=owin(c(min(gwt_sub$X_Coordinate),max(gwt_sub$X_Coordinate)), c(min(gwt_sub$Y_Coordinate),max(gwt_sub$Y_Coordinate)))) # marks needs to be defined explicitly here
 
 idw.out <- idw(Xppp, power=2) # create IDW with input as ppp-object
 
 plot(idw.out, main="Inverse Distance Weight") #plot
 
-plot(Xppp$x, Xppp$y, pch=3, main = "Point Pattern Plot of XY coordinates", xlab = "x-coordinates", ylab = "y-coordinates", col = "blue", lwd = 1) # site plan of points
+points(Xppp$x,Xppp$y, main = "Point Pattern Plot of XY coordinates", xlab = "x-coordinates", ylab = "y-coordinates", cex=0.5,pch=19,col="blue", lwd = 1) # plotting of points on IDW
 
 # 1c)Create	a	bubble	plot	for	the	groundwater	temperature	values.	Use	the	regular	plot	command.	Scale	the	symbols	 properly.	Try	another	bubble	plot where	you	use	the	absolute temperatures	for	the	symbol	size.	Discuss	the	difference to the	first	plot.
 
