@@ -57,12 +57,28 @@ idw.out <- idw(Xppp, power=2) # create IDW with input as ppp-object
 
 plot(idw.out, main="Inverse Distance Weight") #plot
 
-points(Xppp$x,Xppp$y, main = "Point Pattern Plot of XY coordinates", xlab = "x-coordinates", ylab = "y-coordinates", cex=0.5,pch=19,col="blue", lwd = 1) # plotting of points on IDW
+points(Xppp$x,Xppp$y, main = "Point Pattern Plot of XY coordinates", xlab = "x-coordinates", ylab = "y-coordinates", cex=0.5, pch=19, col="blue", lwd = 1) # plotting of points on IDW
 
 # 1c)Create	a	bubble	plot	for	the	groundwater	temperature	values.	Use	the	regular	plot	command.	Scale	the	symbols	 properly.	Try	another	bubble	plot where	you	use	the	absolute temperatures	for	the	symbol	size.	Discuss	the	difference to the	first	plot.
 
+# coordinates(gwt_sub) <- c("X_Coordinate", "Y_Coordinate") # promote to SpatialPointsDataFrame
 
-bubble(gwt_sub, "Temperature", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates") # absolute values plot
+# bubble(gwt_sub, "Temperature", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates") # absolute values plot
+
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
+points(x, col = "dark red", ylab = "Temp.") # no symbol scaling
+
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
+points(x, cex=gwt_sub$Temperature, col = "dark green", ylab = "y-coordinates") # symbol scaled at temperature absolute values cex=gwt_sub$Temperature
+
+
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
+points(x, cex=gwt_sub$Temperature/5, col = "dark blue", ylab = "y-coordinates") # symbol scaled at cex=gwt_sub$Temperature/5
+
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
+points(x, cex=(gwt_sub$Temperature-8)/5, col = "dark orange", ylab = "y-coordinates") # symbol scaled at cex=(gwt_sub$Temperature-8)/5
+
+
 
 bubble(Xppp$marks, "znorm", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates", cex=gwt_sub$Temperature/5) # cex=gwt_sub$Temperature,	cex=gwt_sub$Temperature/5,	cex=(gwt_sub$Temperature-8)/5
 
