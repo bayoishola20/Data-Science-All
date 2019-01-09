@@ -153,7 +153,7 @@ c(x_wms,y_wms) # print surface centroid coordinates
 
 
 par(mfrow=c(1,2)) # to help with side-by-side comparison
-plot(Xppp, main='NN of Groundwater Temperature') # using point pattern variable created earlier
+plot(Xppp, main='NN of Groundwater Temperature') # using point pattern variable Xppp created earlier
 m <- nnwhich(Xppp)
 m2 <- nnwhich(Xppp, k=2)
 # plotting nearest neighbour links
