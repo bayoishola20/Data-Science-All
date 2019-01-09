@@ -65,33 +65,27 @@ points(Xppp$x,Xppp$y, main = "Point Pattern Plot of XY coordinates", xlab = "x-c
 
 # bubble(gwt_sub, "Temperature", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates") # absolute values plot
 
-plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.", ylab = "y-coordinates")
 points(x, col = "dark red", ylab = "Temp.") # no symbol scaling
 
-plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
-points(x, cex=gwt_sub$Temperature, col = "dark green", ylab = "y-coordinates") # symbol scaled at temperature absolute values cex=gwt_sub$Temperature
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp. scaled at absolute Temp. values", ylab = "y-coordinates")
+points(x, cex=gwt_sub$Temperature, col = "dark green") # symbol scaled at temperature absolute values cex=gwt_sub$Temperature
 
 
-plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
-points(x, cex=gwt_sub$Temperature/5, col = "dark blue", ylab = "y-coordinates") # symbol scaled at cex=gwt_sub$Temperature/5
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp. scaled at one-fifth Temp. values", ylab = "y-coordinates")
+points(x, cex=gwt_sub$Temperature/5, col = "dark blue") # symbol scaled at cex=gwt_sub$Temperature/5
 
-plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.")
-points(x, cex=(gwt_sub$Temperature-8)/5, col = "dark orange", ylab = "y-coordinates") # symbol scaled at cex=(gwt_sub$Temperature-8)/5
-
-
-
-bubble(Xppp$marks, "znorm", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates", cex=gwt_sub$Temperature/5) # cex=gwt_sub$Temperature,	cex=gwt_sub$Temperature/5,	cex=(gwt_sub$Temperature-8)/5
+plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.", ylab = "y-coordinates")
+points(x, cex=(gwt_sub$Temperature-8)/5, col = "dark orange") # symbol scaled at cex=(gwt_sub$Temperature-8)/5
 
 
 
-# Discuss difference
+# Discuss difference between scaled symbols and absolute temperature values symbols
 
 #=========================================Q2====================================
 # 2)		Calculate	the	Nearest	Neighbour	Index	R	for	the	point	distribution	of	the	groundwater	temperatures.
 
 n = length(nndist(Xppp)) # n = number of points
-
-n
 
 D = mean(nndist(Xppp)) # D = mean nearest neighbour distance
 
@@ -109,11 +103,10 @@ R # view outcome
 #Plotting the point pattern
 plot(Xppp)
 #Plotting the convex hull
-plot(bounding.box.xy(coords(Xmeuse)),add=T, border="red")
+plot(bounding.box.xy(coords(Xppp)),add=T, border="red")
 
-# The index is between 0 and 2.15. If R = 0, then clustered; R = 1, then random; R = 2.15, then regularly dispersed/distributed. See pic in folder
-
-# Decide:	if	the	points	are	clustered,	randomly	or	regularly	distributed.
+# Interpretation: 0.9684622 is closer to 1 meaning that groundwater temperature observations are randomly distributed 
+# The index is between 0 and 2.15. If R = 0, then clustered; R = 1, then random; R = 2.15, then regularly dispersed/distributed. See pic in folder. Decide:	if	the	points	are	clustered,	randomly	or	regularly	distributed.
 
 #     The Nearest Neighbour Index R value is very sensitive due to changes of the area !!!
 # The following points must be considered:
@@ -126,18 +119,30 @@ plot(bounding.box.xy(coords(Xmeuse)),add=T, border="red")
 # 3 Calculate	the	Centroid	and	the	Weighted Mean	for	the	groundwater	temperature	and	the	groundwater	surface	values.	Discuss	the	results	for	the	temperature	and	surface	values.	What is the	same,	what is different	and	why.
 
 # centroid
-ct=sum(gwt_sub$Temperature)/length(gwt_sub$Temperature) # centroid of temperature
-cs =sum(gwt_sub$Surface)/length(gwt_sub$Surface) # centroid of surface
+xc=sum(gwt_sub$X_Coordinate)/length(gwt_sub$X_Coordinate) # centroid of x
+yc =sum(gwt_sub$Y_Coordinate)/length(gwt_sub$Y_Coordinate) # centroid of y
 #Plotting the Dataset
-plot(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate, pch=19, col='black', cex=0.5, asp=1)
+plot(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate, xlab='X-Coordinates', ylab='Y-Coordinates', main = "Centroid of Groundwater Temperature.", pch=19, col='dark red', cex=0.6, asp=1)
 #Plotting the Centroid
-points(ct,col='red', pch=1, cex=2)
+points(xc, yc, col='red', pch=1, cex=2)
 
-# weighted mean
-wmt=sum(meuse$x*meuse$zinc)/sum(meuse$zinc)
-wms=sum(meuse$y*meuse$zinc)/sum(meuse$zinc)
+c(xc,yc) # print data centroid coordinates
+
+# weighted mean of temperature
+x_wmt=sum(gwt_sub$X_Coordinate*gwt_sub$Temperature)/sum(gwt_sub$Temperature)
+y_wmt=sum(gwt_sub$Y_Coordinate*gwt_sub$Temperature)/sum(gwt_sub$Temperature)
 #Plotting the Centroid
-points(xwm,ywm,col='blue', pch=1, cex=2)
+points(x_wmt,y_wmt,col='dark blue', pch=1, cex=2)
+
+c(x_wmt,y_wmt) #print temperature centroid coordinates
+
+# weighted mean of temperature
+x_wms=sum(gwt_sub$X_Coordinate*gwt_sub$Surface)/sum(gwt_sub$Surface)
+y_wms=sum(gwt_sub$Y_Coordinate*gwt_sub$Surface)/sum(gwt_sub$Surface)
+#Plotting the Centroid
+points(x_wms,y_wms,col='dark green', pch=1, cex=2)
+
+c(x_wms,y_wms) # print surface centroid coordinates
 
 # DISCUSS: 
 
@@ -148,17 +153,17 @@ points(xwm,ywm,col='blue', pch=1, cex=2)
 
 
 par(mfrow=c(1,2)) # to help with side-by-side comparison
-plot(gwt_sub$Temperature, main='NN of Groundwater Temperature')
-m <- nnwhich(gwt_sub$Temperature)
-m2 <- nnwhich(gwt_sub$Temperature, k=2)
-# plot nearest neighbour links
-b <- gwt_sub$Temperature[m]
-arrows(cells$x, cells$y, b$x, b$y, angle=15, length=0.15, col="red")
+plot(Xppp, main='NN of Groundwater Temperature') # using point pattern variable created earlier
+m <- nnwhich(Xppp)
+m2 <- nnwhich(Xppp, k=2)
+# plotting nearest neighbour links
+b <- Xppp[m]
+arrows(Xppp$x, Xppp$y, b$x, b$y, angle=15, length=0.15, col="red")
 #Find points which are the neighbour of their neighbour
 self <- (m[m] == seq(m))
 # plot them
-A <- gwt_sub$Temperature[self]
-B <- gwt_sub$Temperature[m[self]]
-plot(gwt_sub$Temperature, main='Neighbour of their Neighbour')
-segments(A$x, A$y, B$x, B$y)
+A <- Xppp[self]
+B <- Xppp[m[self]]
+plot(Xppp, main='Neighbour of their Neighbour')
+segments(A$x, A$y, B$x, B$y, col="dark blue")
 par(op)
