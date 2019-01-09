@@ -61,10 +61,6 @@ points(Xppp$x,Xppp$y, main = "Point Pattern Plot of XY coordinates", xlab = "x-c
 
 # 1c)Create	a	bubble	plot	for	the	groundwater	temperature	values.	Use	the	regular	plot	command.	Scale	the	symbols	 properly.	Try	another	bubble	plot where	you	use	the	absolute temperatures	for	the	symbol	size.	Discuss	the	difference to the	first	plot.
 
-# coordinates(gwt_sub) <- c("X_Coordinate", "Y_Coordinate") # promote to SpatialPointsDataFrame
-
-# bubble(gwt_sub, "Temperature", fill=F, main = "Bubble-Plot of Groundwater Temp. values", scales = list(draw = TRUE), xlab = "X-Coordinates", ylab = "Y-Coordinates") # absolute values plot
-
 plot(x <- gwt_sub$Temperature, type = "p", main = "Bubble plot of Temp.", ylab = "y-coordinates")
 points(x, col = "dark red", ylab = "Temp.") # no symbol scaling
 
@@ -136,7 +132,7 @@ points(x_wmt,y_wmt,col='dark blue', pch=1, cex=2)
 
 c(x_wmt,y_wmt) #print temperature centroid coordinates
 
-# weighted mean of temperature
+# weighted mean of surface
 x_wms=sum(gwt_sub$X_Coordinate*gwt_sub$Surface)/sum(gwt_sub$Surface)
 y_wms=sum(gwt_sub$Y_Coordinate*gwt_sub$Surface)/sum(gwt_sub$Surface)
 #Plotting the Centroid
@@ -165,5 +161,5 @@ self <- (m[m] == seq(m))
 A <- Xppp[self]
 B <- Xppp[m[self]]
 plot(Xppp, main='Neighbour of their Neighbour')
-segments(A$x, A$y, B$x, B$y, col="dark blue")
+segments(A$x, A$y, B$x, B$y, col="blue")
 par(op)
