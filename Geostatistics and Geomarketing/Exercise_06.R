@@ -47,17 +47,76 @@ gwt_sub <- subset(gwt,subset=(Surface > 0)) # subsetting values of Surface varia
 gwt_sub <- gwt[gwt$Surface > 0,] # alternative subsetting values of Surface variables > 0
 
 
-# 1b)	Creating a	Point	Pattern
+# 1b)	Create a SpatialPointsDataFrame object (e.g. gwt_sub.spdf) from this imported data.frame (e.g. gwt_sub). The crs of the groundwater temperature dataset is DHDN / 3-degree Gauss-Kruger zone 4. Use the EPSG code of this system (Google!) to define the crs for gwt_sub.sp.
 
+gwt_sub_xy <- cbind(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate) # X and Y coordinate coercion along column
+
+gwt_sub.sp <- SpatialPoints(gwt_sub_xy) # create spatial points
+
+summary(gwt_sub.sp)
+
+bbox(gwt_sub.sp) #get bouding box
+
+proj4string(gwt_sub.sp)
+
+class(gwt_sub.sp) # confirm object class
+
+str(gwt_sub.sp)
+
+
+proj4string(gwt_sub.sp) <- CRS("+init=epsg:31468") # http://spatialreference.org/ref/epsg/31468/
+
+proj4string(gwt_sub.sp) # check CRS projection
+
+z <- gwt_sub$Surface
+
+z <- data.frame(z) #set z as dataFrame
+
+gwt_sub.spdf <- SpatialPointsDataFrame(gwt_sub.sp, z) # defining SpatialPointsDataFrame
+
+gwt_sub.spdf # view SpatialPointsDataFrame
 
 #=========================================Q2====================================
 
+# The package "tripack" includes functions for the Triangulation of irregularly spaced data. 
+
+# 2a) Use the package ”tripack” for creating a triangulation mesh with the Delaunay method for the dataset gwt_sub. Examine the result with summary and plot the mesh.
+
+summary(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate))
+
+plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="green", main="Delaunay Triangulation")
+points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate)
+
+# 2b) Use the package ”tripack” for creating Voronoi polygons with the Delaunay method for the dataset gwt_sub. Examine the result with summary and plot the Voronoi polygons.
+
+
+# 2c) Plot the triangulation mesh, the Voronoi polygons und the Spatial Points in one map. Discuss the relationship of the triangulation mesh and the Voronoi polygons.
+
 #=========================================Q3====================================
+# Use the package “dismo” for creating the Voronoi Polygons with the original data values from the gwt_sub points
+install.packages(c("akima", "gstat", "dismo", "spatstat", "fields")) # install packages needed for this exercise.
+library("dismo")
+library("fields")
+library("akimo")
+library("spatstat")
+
+# 3a) Plot the Voronoi polygons showing the temperature and surface values for each polygon with a specific color scale
+
+
+#3b) Calculate the convex hull for the gwt_sub points use the convex hull for clipping the Voronoi polygons from 3a)
 
 #=========================================Q4====================================
 
+# Use the package “akima” to create a linear interpolation surface for the gwt_sub dataset. Add the triangulation mesh from exercise 2a) and the spatial points from gwt_sub to this plot. Discuss what you see.
+
 #=========================================Q5====================================
+
+#Use the package “spatstat” or the package “gstat” for applying the Inverse Distance Weighting (IDW) for the gwt_sub data. What do you observe, if you are increasing successively the power value. Do you think, that the IDW method is useful for creating spatial surfaces of natural phenomena like precipitation over Europe or gold content of sandstones in the Australian desert.
 
 #=========================================Q6====================================
 
+# Use the package “surf.ls” or the package “gstat” for creating trend surfaces of 1st, 2nd, 3rd and 4th order for the gwt_sub dataset. Compare these 4 different surfaces by calculating the Root Mean Square Error for each of them.
+
 #=========================================Q7====================================
+
+# Use the package “fields” for fitting a thin plate spline surface to the irregularly spaced data of the temperature and surface values of the gwt_sub dataset.
