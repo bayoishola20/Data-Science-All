@@ -29,7 +29,14 @@ gw <- read.csv("Groundwater_Temperature.csv")
 
 View(gw) #view data
 
+install.packages(c("tripack", "akima", "gstat", "dismo", "spatstat", "fields")) # install packages needed for this exercise.
 
+#load all installed packages
+library("dismo")
+library("fields")
+library("akimo")
+library("spatstat")
+library("tripack")
 
 gwt <- read.csv("Groundwater_Temperature.csv", header = TRUE, col.names = c("Name", "X_Coordinate", "Y_Coordinate", "Surface", "Date", "Temperature"), colClasses = c("Name" = "character", "X_Coordinate" = "double", "Date" = "character"), numerals = c("no.loss"))
 
@@ -63,18 +70,26 @@ class(gwt_sub.sp) # confirm object class
 
 str(gwt_sub.sp)
 
-
 proj4string(gwt_sub.sp) <- CRS("+init=epsg:31468") # http://spatialreference.org/ref/epsg/31468/
 
 proj4string(gwt_sub.sp) # check CRS projection
 
-z <- gwt_sub$Surface
+z <- gwt_sub$Surface #surface as third column, z
 
 z <- data.frame(z) #set z as dataFrame
 
 gwt_sub.spdf <- SpatialPointsDataFrame(gwt_sub.sp, z) # defining SpatialPointsDataFrame
 
-gwt_sub.spdf # view SpatialPointsDataFrame
+gwt_sub.spdf # print SpatialPointsDataFrame
+
+# SPDF for temperature
+w <- gwt_sub$Temperature #temperature as third column, w
+
+w <- data.frame(w) #set w as dataFrame
+
+gwt_sub.spdf2 <- SpatialPointsDataFrame(gwt_sub.sp, w) # defining SpatialPointsDataFrame fpr temperature
+
+gwt_sub.spdf2 # print SpatialPointsDataFrame
 
 #=========================================Q2====================================
 
@@ -85,25 +100,50 @@ gwt_sub.spdf # view SpatialPointsDataFrame
 summary(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate))
 
 plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="green", main="Delaunay Triangulation")
-points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate)
+points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, col="red")
 
 # 2b) Use the package ”tripack” for creating Voronoi polygons with the Delaunay method for the dataset gwt_sub. Examine the result with summary and plot the Voronoi polygons.
 
+summary(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate))
+
+plot(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"), col="blue", main="Voronoi Polygons")
+points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, col="orange")
 
 # 2c) Plot the triangulation mesh, the Voronoi polygons und the Spatial Points in one map. Discuss the relationship of the triangulation mesh and the Voronoi polygons.
 
+plot(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"), col="blue", main="Triangulation Mesh and Voronoi Polygons")
+
+plot(tri.mesh(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"),col="green", add=TRUE)
+
+points(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate, col="gray")
+
+# DISCUSS
+
 #=========================================Q3====================================
 # Use the package “dismo” for creating the Voronoi Polygons with the original data values from the gwt_sub points
-install.packages(c("akima", "gstat", "dismo", "spatstat", "fields")) # install packages needed for this exercise.
-library("dismo")
-library("fields")
-library("akimo")
-library("spatstat")
+
+voronoi.spoly <- voronoi(gwt_sub.spdf)
+
+plot(voronoi.spoly)
+summary(voronoi.spoly)
 
 # 3a) Plot the Voronoi polygons showing the temperature and surface values for each polygon with a specific color scale
 
 
+voronoi.spoly <- voronoi(gwt_sub.spdf)
+plot(voronoi.spoly)
+spplot(voronoi.spoly, "z", col=topo.colors(3))
+
+#for temperature
+voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
+plot(voronoi.spoly2)
+spplot(voronoi.spoly2, "w", col=rainbow(3))
+
+
+
 #3b) Calculate the convex hull for the gwt_sub points use the convex hull for clipping the Voronoi polygons from 3a)
+
+
 
 #=========================================Q4====================================
 
