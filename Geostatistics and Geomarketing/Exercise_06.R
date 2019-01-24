@@ -12,6 +12,7 @@ library("spatstat") # activate package
 require(spatstat) # alternative activate package
 
 require(sp) # activate package
+require(rgeos) #activate rgeos
 
 
 setwd("/var/www/example.com/public_html/Data-Science-All/Geostatistics and Geomarketing") # set working directory
@@ -31,12 +32,16 @@ View(gw) #view data
 
 install.packages(c("tripack", "akima", "gstat", "dismo", "spatstat", "fields")) # install packages needed for this exercise.
 
-#load all installed packages
+#load all required packages
 library("dismo")
 library("fields")
 library("akimo")
 library("spatstat")
 library("tripack")
+library("spatstat")
+library("sp")
+library("rgeos")
+library("wesanderson")
 
 gwt <- read.csv("Groundwater_Temperature.csv", header = TRUE, col.names = c("Name", "X_Coordinate", "Y_Coordinate", "Surface", "Date", "Temperature"), colClasses = c("Name" = "character", "X_Coordinate" = "double", "Date" = "character"), numerals = c("no.loss"))
 
@@ -74,20 +79,22 @@ proj4string(gwt_sub.sp) <- CRS("+init=epsg:31468") # http://spatialreference.org
 
 proj4string(gwt_sub.sp) # check CRS projection
 
-z <- gwt_sub$Surface #surface as third column, z
+# SPDF for Surface
 
-z <- data.frame(z) #set z as dataFrame
+z <- gwt_sub$Surface #surface as third attribute, z
+
+z <- data.frame(z) # assign z as dataFrame
 
 gwt_sub.spdf <- SpatialPointsDataFrame(gwt_sub.sp, z) # defining SpatialPointsDataFrame
 
 gwt_sub.spdf # print SpatialPointsDataFrame
 
 # SPDF for temperature
-w <- gwt_sub$Temperature #temperature as third column, w
+w <- gwt_sub$Temperature #temperature as third attribute, w
 
-w <- data.frame(w) #set w as dataFrame
+w <- data.frame(w) # assign w as dataFrame
 
-gwt_sub.spdf2 <- SpatialPointsDataFrame(gwt_sub.sp, w) # defining SpatialPointsDataFrame fpr temperature
+gwt_sub.spdf2 <- SpatialPointsDataFrame(gwt_sub.sp, w) # defining SpatialPointsDataFrame for temperature
 
 gwt_sub.spdf2 # print SpatialPointsDataFrame
 
@@ -129,15 +136,15 @@ summary(voronoi.spoly)
 
 # 3a) Plot the Voronoi polygons showing the temperature and surface values for each polygon with a specific color scale
 
-
+#for surface
 voronoi.spoly <- voronoi(gwt_sub.spdf)
 plot(voronoi.spoly)
-spplot(voronoi.spoly, "z", col=topo.colors(3))
+spplot(voronoi.spoly, "z", col=heat.colors(5))
 
 #for temperature
 voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
 plot(voronoi.spoly2)
-spplot(voronoi.spoly2, "w", col=rainbow(3))
+spplot(voronoi.spoly2, "w", col= rainbow(5))
 
 
 
