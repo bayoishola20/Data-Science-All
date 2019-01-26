@@ -159,14 +159,15 @@ gwtCH <- convexhull.xy(coords(Xgwt))
 
 #for surface
 voronoi.spoly <- voronoi(gwt_sub.spdf)
-plot(voronoi.spoly)
-spplot(voronoi.spoly, "z", col=heat.colors(5))
+plot(voronoi(gwt_sub.spdf))
+spplot(voronoi(gwt_sub.spdf), "z", col.regions= brewer.pal(n = 7, name = "Accent"))
 plot(gwtCH,add=T, border="red")
+
 
 #for temperature
 voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
 plot(voronoi(gwt_sub.spdf2))
-spplot(voronoi(gwt_sub.spdf2), "w", col= topo.colors(5))
+spplot(voronoi(gwt_sub.spdf2), "w", col.regions= brewer.pal(n = 7, name = "OrRd"))
 plot(gwtCH,add=T, border="red")
 
 #=========================================Q4====================================
