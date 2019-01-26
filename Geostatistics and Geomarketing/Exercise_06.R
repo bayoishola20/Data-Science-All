@@ -156,6 +156,8 @@ A=area.owin(bounding.box.xy(coords(Xgwt)))
 
 gwtCH <- convexhull.xy(coords(Xgwt))
 
+plot(gwtCH, col="gray", projection="UTM")
+
 #for surface
 voronoi.spoly <- voronoi(gwt_sub.spdf)
 plot(voronoi(gwt_sub.spdf))
@@ -168,6 +170,32 @@ voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
 plot(voronoi(gwt_sub.spdf2))
 spplot(voronoi(gwt_sub.spdf2), "w", col.regions= brewer.pal(n = 7, name = "OrRd"))
 plot(gwtCH,add=T, border="red")
+
+
+# clip surface
+require(PBSmapping)
+
+gwt_subXY<-data.frame(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate)
+names(gwt_subXY)<- c("X","Y")
+summary(gwt_subXY)
+
+convexHull <- calcConvexHull(gwt_subXY)
+class(convexHull)
+plotMap(convexHull, col="gray", border = "red")
+p1 = cbind(convexHull$X, convexHull$Y)
+sp1 = Polygons(list(Polygon(p1)),"p1")
+sp = SpatialPolygons(list(sp1))
+proj4string(sp) <-CRS("+init=epsg:31468")
+summary(sp)
+
+
+voronoi.spolyClip <- crop(voronoi.spoly, sp)
+spplot(voronoi.spolyClip, "z", col.regions= brewer.pal(n = 7, name = "Accent"))
+
+
+# clip Temperature
+voronoi.spolyClip2 <- crop(voronoi.spoly2, sp)
+spplot(voronoi.spolyClip2, "w", col.regions= brewer.pal(n = 7, name = "OrRd"))
 
 #=========================================Q4====================================
 
