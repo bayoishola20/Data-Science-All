@@ -44,6 +44,7 @@ library("rgeos")
 library("spatial")
 library("fields")
 library("gstat")
+library("RColorBrewer")
 
 gwt <- read.csv("Groundwater_Temperature.csv", header = TRUE, col.names = c("Name", "X_Coordinate", "Y_Coordinate", "Surface", "Date", "Temperature"), colClasses = c("Name" = "character", "X_Coordinate" = "double", "Date" = "character"), numerals = c("no.loss"))
 
@@ -108,7 +109,7 @@ gwt_sub.spdf2 # print SpatialPointsDataFrame
 
 summary(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate))
 
-plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), main="Delaunay Triangulation", col="blue")
+plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), main="Triangulation mesh based on Delaunay Method", col="blue")
 points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, col="red")
 
 # 2b) Use the package ”tripack” for creating Voronoi polygons with the Delaunay method for the dataset gwt_sub. Examine the result with summary and plot the Voronoi polygons.
@@ -133,20 +134,18 @@ points(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate, col="gray")
 
 voronoi.spoly <- voronoi(gwt_sub.spdf)
 
-plot(voronoi.spoly)
+plot(voronoi.spoly, main="Groundwater Voronoi Polygons")
 summary(voronoi.spoly)
 
 # 3a) Plot the Voronoi polygons showing the temperature and surface values for each polygon with a specific color scale
 
 #for surface
 voronoi.spoly <- voronoi(gwt_sub.spdf)
-plot(voronoi.spoly)
-spplot(voronoi.spoly, "z", col=heat.colors(5))
+spplot(voronoi.spoly, "z", col.regions= brewer.pal(n = 7, name = "Accent"))
 
 #for temperature
 voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
-plot(voronoi(gwt_sub.spdf2))
-spplot(voronoi(gwt_sub.spdf2), "w", col= topo.colors(5))
+spplot(voronoi.spoly2, "w", col.regions= brewer.pal(n = 7, name = "OrRd"))
 
 
 
