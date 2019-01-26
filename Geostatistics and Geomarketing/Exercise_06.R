@@ -36,9 +36,8 @@ install.packages(c("tripack", "akima", "gstat", "dismo", "spatstat", "fields")) 
 library("dismo")
 library("fields")
 library("akima")
-library("spatstat")
+require(spatstat)
 library("tripack")
-library("spatstat")
 library("sp")
 library("rgeos")
 library("spatial")
@@ -178,7 +177,7 @@ gwt_sub.li <- interp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, gwt_sub$Surface
 #Plotting the results
 image (gwt_sub.li, main="Linear Interpolation Surface, Mesh and Points", asp=1)
 contour(gwt_sub.li, col='blue', add=TRUE)
-points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, pch = 3, xlab = "x-coordinates", ylab = "y-coordinates")
+points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, pch = 1, xlab = "x-coordinates", ylab = "y-coordinates")
 plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="blue", add =TRUE, lty="dotted")
 
 # DISCUSSION: 
@@ -187,7 +186,11 @@ plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="blue", add =TRUE
 
 #Use the package “spatstat” or the package “gstat” for applying the Inverse Distance Weighting (IDW) for the gwt_sub data. What do you observe, if you are increasing successively the power value. Do you think, that the IDW method is useful for creating spatial surfaces of natural phenomena like precipitation over Europe or gold content of sandstones in the Australian desert.
 
+# PS: Ensure you don't have both gstat and spatstat package loaded
+
 par(mfrow=c(2,2)) # for comparison
+
+Xgwt <- ppp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, marks = gwt_sub$Surface, window=owin(c(min(gwt_sub$X_Coordinate),max(gwt_sub$X_Coordinate)), c(min(gwt_sub$Y_Coordinate),max(gwt_sub$Y_Coordinate))))
 
 idw.out <- idw(Xgwt, power=2) # create IDW with input as ppp-object @ pow = 2
 
