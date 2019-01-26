@@ -35,13 +35,15 @@ install.packages(c("tripack", "akima", "gstat", "dismo", "spatstat", "fields")) 
 #load all required packages
 library("dismo")
 library("fields")
-library("akimo")
+library("akima")
 library("spatstat")
 library("tripack")
 library("spatstat")
 library("sp")
 library("rgeos")
-library("wesanderson")
+library("spatial")
+library("fields")
+library("gstat")
 
 gwt <- read.csv("Groundwater_Temperature.csv", header = TRUE, col.names = c("Name", "X_Coordinate", "Y_Coordinate", "Surface", "Date", "Temperature"), colClasses = c("Name" = "character", "X_Coordinate" = "double", "Date" = "character"), numerals = c("no.loss"))
 
@@ -106,7 +108,7 @@ gwt_sub.spdf2 # print SpatialPointsDataFrame
 
 summary(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate))
 
-plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="green", main="Delaunay Triangulation")
+plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), main="Delaunay Triangulation", col="blue")
 points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, col="red")
 
 # 2b) Use the package ”tripack” for creating Voronoi polygons with the Delaunay method for the dataset gwt_sub. Examine the result with summary and plot the Voronoi polygons.
@@ -116,7 +118,7 @@ summary(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate))
 plot(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"), col="blue", main="Voronoi Polygons")
 points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, col="orange")
 
-# 2c) Plot the triangulation mesh, the Voronoi polygons und the Spatial Points in one map. Discuss the relationship of the triangulation mesh and the Voronoi polygons.
+# 2c) Plot the triangulation mesh, the Voronoi polygons and the Spatial Points in one map. Discuss the relationship of the triangulation mesh and the Voronoi polygons.
 
 plot(voronoi.mosaic(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"), col="blue", main="Triangulation Mesh and Voronoi Polygons")
 
@@ -124,7 +126,7 @@ plot(tri.mesh(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate,duplicate="remove"),col=
 
 points(gwt_sub$X_Coordinate,gwt_sub$Y_Coordinate, col="gray")
 
-# DISCUSS
+# DISCUSS: The nodes of the mesh (gray) are equidistant to each other with the voronoi edges (blue) acting as the boundary. To further validate this, the mesh has 489 nodes while the Voronoi polygon has just about twice the number of nodes (961 and 15 dummy nodes.)
 
 #=========================================Q3====================================
 # Use the package “dismo” for creating the Voronoi Polygons with the original data values from the gwt_sub points
@@ -143,27 +145,145 @@ spplot(voronoi.spoly, "z", col=heat.colors(5))
 
 #for temperature
 voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
-plot(voronoi.spoly2)
-spplot(voronoi.spoly2, "w", col= rainbow(5))
+plot(voronoi(gwt_sub.spdf2))
+spplot(voronoi(gwt_sub.spdf2), "w", col= topo.colors(5))
 
 
 
 #3b) Calculate the convex hull for the gwt_sub points use the convex hull for clipping the Voronoi polygons from 3a)
 
+Xgwt <- ppp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, marks=gwt_sub$Temperature, window=owin(c(min(gwt_sub$X_Coordinate),max(gwt_sub$X_Coordinate)), c(min(gwt_sub$Y_Coordinate),max(gwt_sub$Y_Coordinate))))
 
+A=area.owin(bounding.box.xy(coords(Xgwt)))
+
+gwtCH <- convexhull.xy(coords(Xgwt))
+
+#for surface
+voronoi.spoly <- voronoi(gwt_sub.spdf)
+plot(voronoi.spoly)
+spplot(voronoi.spoly, "z", col=heat.colors(5))
+plot(gwtCH,add=T, border="red")
+
+#for temperature
+voronoi.spoly2 <- voronoi(gwt_sub.spdf2)
+plot(voronoi(gwt_sub.spdf2))
+spplot(voronoi(gwt_sub.spdf2), "w", col= topo.colors(5))
+plot(gwtCH,add=T, border="red")
 
 #=========================================Q4====================================
 
 # Use the package “akima” to create a linear interpolation surface for the gwt_sub dataset. Add the triangulation mesh from exercise 2a) and the spatial points from gwt_sub to this plot. Discuss what you see.
 
+gwt_sub.li <- interp(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, gwt_sub$Surface)
+#Plotting the results
+image (gwt_sub.li, main="Linear Interpolation Surface, Mesh and Points", asp=1)
+contour(gwt_sub.li, col='blue', add=TRUE)
+points(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate, pch = 3, xlab = "x-coordinates", ylab = "y-coordinates")
+plot(tri.mesh(gwt_sub$X_Coordinate, gwt_sub$Y_Coordinate), col="blue", add =TRUE, lty="dotted")
+
+# DISCUSSION: 
+
 #=========================================Q5====================================
 
 #Use the package “spatstat” or the package “gstat” for applying the Inverse Distance Weighting (IDW) for the gwt_sub data. What do you observe, if you are increasing successively the power value. Do you think, that the IDW method is useful for creating spatial surfaces of natural phenomena like precipitation over Europe or gold content of sandstones in the Australian desert.
+
+par(mfrow=c(2,2)) # for comparison
+
+idw.out <- idw(Xgwt, power=2) # create IDW with input as ppp-object @ pow = 2
+
+plot(idw.out, main="Inverse Distance Weight (pow=2)") #plot
+
+
+idw.out <- idw(Xgwt, power=3) # create IDW with input as ppp-object @ pow = 3
+
+plot(idw.out, main="Inverse Distance Weight (pow=3)") #plot
+
+
+idw.out <- idw(Xgwt, power=4) # create IDW with input as ppp-object @ pow = 4
+
+plot(idw.out, main="Inverse Distance Weight (pow=4)") #plot
+
+
+idw.out <- idw(Xgwt, power=5) # create IDW with input as ppp-object @ pow = 5
+
+plot(idw.out, main="Inverse Distance Weight (pow=5)") #plot
+
+# DISCUSSION:
 
 #=========================================Q6====================================
 
 # Use the package “surf.ls” or the package “gstat” for creating trend surfaces of 1st, 2nd, 3rd and 4th order for the gwt_sub dataset. Compare these 4 different surfaces by calculating the Root Mean Square Error for each of them.
 
+#Least Square Method from 1 to 4th power
+
+gwt_sub1 <- surf.ls(1, x = gwt_sub$X_Coordinate, y = gwt_sub$Y_Coordinate, z = gwt_sub$Surface)
+gwt_sub2 <- surf.ls(2, x = gwt_sub$X_Coordinate, y = gwt_sub$Y_Coordinate, z = gwt_sub$Surface)
+gwt_sub3 <- surf.ls(3, x = gwt_sub$X_Coordinate, y = gwt_sub$Y_Coordinate, z = gwt_sub$Surface)
+gwt_sub4 <- surf.ls(4, x = gwt_sub$X_Coordinate, y = gwt_sub$Y_Coordinate, z = gwt_sub$Surface)
+
+# Difference between the Predictions and the Observed Values
+z1<-predict(gwt_sub1, gwt_sub1$x, gwt_sub1$y)
+delta1=gwt_sub$Surface-z1
+
+z2<-predict(gwt_sub2, gwt_sub2$x, gwt_sub2$y)
+delta2=gwt_sub$Surface-z2
+
+z3<-predict(gwt_sub3, gwt_sub3$x, gwt_sub3$y)
+delta3=gwt_sub$Surface-z3
+
+z4 <- predict(gwt_sub4, gwt_sub4$x, gwt_sub4$y)
+delta4=gwt_sub$Surface-z4
+
+
+# RMSE  comparison
+
+sqrt(sum(delta1**2/length(delta1)))
+sqrt(sum(delta2**2/length(delta2)))
+sqrt(sum(delta3**2/length(delta3)))
+sqrt(sum(delta4**2/length(delta4)))
+
+par(mfrow = c(2, 2))
+hist(delta1, main="Hist. of Delta at Pow=1", col=topo.colors(6), border = "white")
+hist(delta2, main="Hist. of Delta at Pow=2", col=topo.colors(6), border = "white")
+hist(delta3, main="Hist. of Delta at Pow=3", col=topo.colors(6), border = "white")
+hist(delta4, main="Hist. of Delta at Pow=4", col=topo.colors(6), border = "white")
+
 #=========================================Q7====================================
 
 # Use the package “fields” for fitting a thin plate spline surface to the irregularly spaced data of the temperature and surface values of the gwt_sub dataset.
+
+
+#=== For Temperature
+gwt_spline<-Tps(coordinates(gwt_sub.sp), gwt_sub$Temperature)
+
+par(mfrow = c(1, 2)) # for side-by-side comparison
+
+#Plot the surface object
+surface(gwt_spline)
+class(gwt_spline)
+points(gwt_sub.sp)
+
+#Plot the predict.surface object
+gwt_spline_img<-predictSurface(gwt_spline)
+class(gwt_spline_img)
+image(gwt_spline_img)
+contour(gwt_spline_img,add=T)
+points(gwt_sub.sp,col='white', xlab="x-coordinates", ylab="y-coordinates")
+
+
+#=== For Surface
+gwt_spline<-Tps(coordinates(gwt_sub.sp), gwt_sub$Surface)
+
+par(mfrow = c(1, 2)) # for side-by-side comparison
+
+#Plot the surface object
+surface(gwt_spline)
+class(gwt_spline)
+points(gwt_sub.sp)
+
+#Plot the predict.surface object
+gwt_spline_img<-predictSurface(gwt_spline)
+class(gwt_spline_img)
+image(gwt_spline_img)
+contour(gwt_spline_img,add=T)
+points(gwt_sub.sp,col='white')
