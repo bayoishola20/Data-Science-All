@@ -71,8 +71,8 @@ Inspired by several online resources and personal encounters. :smiles:
 
 &rightarrow; https://www.statmethods.net/input/datatypes.html
 
-https://rstudio.github.io/leaflet/morefeatures.html
+&rightarrow; https://rstudio.github.io/leaflet/morefeatures.html
 
-https://www.datacamp.com/community/data-science-cheatsheets
+&rightarrow; https://www.datacamp.com/community/data-science-cheatsheets
 
 PS. Ubuntu is the OS used.
