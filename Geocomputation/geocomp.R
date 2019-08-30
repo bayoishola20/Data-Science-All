@@ -1,0 +1,1 @@
+# Geocomputation: https://geocompr.robinlovelace.net/
