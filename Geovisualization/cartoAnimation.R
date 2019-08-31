@@ -35,17 +35,19 @@ cartoMap <- ggplot() +
   scale_size_continuous(range = c(4, 10), breaks = c(250, 500, 750, 1000)) + # range controls size
   transition_states(data$Year) + # could be changed to entryDate
   theme_map() +
-  # coord_map("azequidistant") +
-  labs(size = 'Count',
-       title = "Cartography Intakes from different parts of the world",
-       subtitle = 'PERIOD OF STUDY: {closest_state}',
-       caption = 'Points are scaled by number of persons') +
+  coord_map("azequidistant") +
   theme(plot.title = element_text(size=14, hjust = 0.5,  family="Abadi MT Condensed Light", face="bold"),
         plot.subtitle = element_text(size=13, hjust = 0.5,  family="Abadi MT Condensed Light"),
-        plot.caption = element_text(family="Abadi MT Condensed Light"))
+        plot.caption = element_text(family="Abadi MT Condensed Light"),
+        legend.position = "bottom") +
+  labs(size = data$Count,
+       title = "Program Intakes from different parts of the world",
+       subtitle = 'PERIOD OF STUDY: {closest_state}',
+       caption = 'Points are scaled by number of persons')
 
 # cartoMap
 
+# ggsave("cartomap.png", device = "png", plot = cartoMap, dpi = 900)
 
 anim <- animate(cartoMap, duration = 0.005, nframes = 8*length(unique(entryDate)), height = 400, width = 700) # animate
 
